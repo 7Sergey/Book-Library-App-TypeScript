@@ -16,21 +16,6 @@ const Filter = () => {
   const authorFilter = useSelector(selectAuthorFilter);
   const favoriteFilter = useSelector(selectFavoriteFilter);
 
-  const handleTitleFilterChange = (e) => {
-    dispatch(setTitleFilter(e.target.value));
-  };
-
-  const handleAuthorFilterChange = (e) => {
-    dispatch(setAuthorFilter(e.target.value));
-  };
-
-  const handleFavoriteFilterChange = (e) => {
-    dispatch(setFavoriteFilter(e.target.checked));
-  };
-
-  const handleResetFilters = () => {
-    dispatch(resetFilters());
-  };
   return (
     <div className="app-block filter">
       <div className="filter-row">
@@ -38,7 +23,7 @@ const Filter = () => {
           <input
             type="text"
             placeholder="Filter by title..."
-            onChange={handleTitleFilterChange}
+            onChange={(e) => dispatch(setTitleFilter(e.target.value))}
             value={titleFilter}
           />
         </div>
@@ -46,7 +31,7 @@ const Filter = () => {
           <input
             type="text"
             placeholder="Filter by author..."
-            onChange={handleAuthorFilterChange}
+            onChange={(e) => dispatch(setAuthorFilter(e.target.value))}
             value={authorFilter}
           />
         </div>
@@ -55,17 +40,15 @@ const Filter = () => {
             <input
               type="checkbox"
               id="favorites"
-              name="favorites"
               checked={favoriteFilter}
-              onChange={handleFavoriteFilterChange}
-            ></input>
+              onChange={(e) => dispatch(setFavoriteFilter(e.target.checked))}
+            />
             Only Favorite
           </label>
         </div>
-        <button onClick={handleResetFilters}>Reset Filters</button>
+        <button onClick={() => dispatch(resetFilters())}>Reset Filters</button>
       </div>
     </div>
   );
 };
-
 export default Filter;

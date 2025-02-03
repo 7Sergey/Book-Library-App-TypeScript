@@ -1,14 +1,15 @@
 // utils/createBookWithId.ts
 import { v4 as uuidv4 } from 'uuid';
-import { Book, BookWithId, BookSource } from '../types/types';
+import { BookWithId, BookSource, Book } from '../types/types';
 
 const createBookWithId = (book: Book, source: BookSource): BookWithId => {
   return {
     ...book,
-    source: source,
+    _id: uuidv4(), // Генерация _id
+    id: uuidv4(), // Генерация id
+    source: source, // Добавляем source
     isFavorite: false,
-    id: uuidv4(),
-    year: book.year || 'Неизвестен', // Добавим значение по умолчанию для года
+    year: book.year || 'Неизвестен', // Значение по умолчанию для года
   };
 };
 

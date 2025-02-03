@@ -2,13 +2,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { setError } from './errorSlice';
-
-interface Book {
-  id: string;
-  title: string;
-  author: string;
-  isFavorite: boolean;
-}
+import { Book } from '../../types/types';
 
 interface BooksState {
   books: Book[];
@@ -58,11 +52,11 @@ const booksSlice = createSlice({
       state.books.push(action.payload);
     },
     deleteBook: (state, action: PayloadAction<string>) => {
-      state.books = state.books.filter((book) => book.id !== action.payload);
+      state.books = state.books.filter((book) => book._id !== action.payload);
     },
     toggleFavorite: (state, action: PayloadAction<string>) => {
       state.books.forEach((book) => {
-        if (book.id === action.payload) {
+        if (book._id === action.payload) {
           book.isFavorite = !book.isFavorite;
         }
       });

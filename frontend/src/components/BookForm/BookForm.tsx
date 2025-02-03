@@ -84,7 +84,10 @@ const BookForm = () => {
           disabled={isLoadingViaAPI}
         >
           {isLoadingViaAPI ? (
-            <FaSpinner className="spinner" />
+            <>
+              <span>Loading Book...</span>
+              <FaSpinner className="spinner" />
+            </>
           ) : (
             "Add Random via API"
           )}

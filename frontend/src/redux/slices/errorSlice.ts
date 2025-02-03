@@ -1,17 +1,22 @@
-import { createSlice } from '@reduxjs/toolkit';
+// src/redux/slices/errorSlice.ts
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = '';
+interface ErrorState {
+  message: string | null;
+}
+
+const initialState: ErrorState = {
+  message: null,
+};
 
 const errorSlice = createSlice({
   name: 'error',
-  initialState: initialState,
+  initialState,
   reducers: {
-    setError: (state, action) => {
-      state = action.payload;
-      return state;
+    setError: (state, action: PayloadAction<string>) => {
+      state.message = action.payload;
     },
     clearError: () => {
-      // очищаем состояние ошибки
       return initialState;
     },
   },
@@ -19,6 +24,7 @@ const errorSlice = createSlice({
 
 export const { setError, clearError } = errorSlice.actions;
 
-export const selectErrorMessage = (state) => state.error;
+export const selectErrorMessage = (state: { error: ErrorState }) =>
+  state.error.message;
 
 export default errorSlice.reducer;

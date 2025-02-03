@@ -1,6 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
+// src/redux/slices/filterSlice.ts
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = {
+interface FilterState {
+  title: string;
+  author: string;
+  favorite: boolean;
+}
+
+const initialState: FilterState = {
   title: '',
   author: '',
   favorite: false,
@@ -8,28 +15,18 @@ const initialState = {
 
 const filterSlice = createSlice({
   name: 'filter',
-  initialState: initialState,
+  initialState,
   reducers: {
-    setTitleFilter: (state, action) => {
-      //При использовании slice можно изменять state (объект состояния). Благодаря библиотеке Immer
+    setTitleFilter: (state, action: PayloadAction<string>) => {
       state.title = action.payload;
     },
-    setAuthorFilter: (state, action) => {
-      // Классический способ
-      return {
-        ...state,
-        author: action.payload,
-      };
+    setAuthorFilter: (state, action: PayloadAction<string>) => {
+      state.author = action.payload;
     },
-    setFavoriteFilter: (state, action) => {
-      // Классический способ
-      return {
-        ...state,
-        favorite: action.payload,
-      };
+    setFavoriteFilter: (state, action: PayloadAction<boolean>) => {
+      state.favorite = action.payload;
     },
     resetFilters: () => {
-      //Можно просто вернуть начальное значение
       return initialState;
     },
   },
@@ -42,8 +39,11 @@ export const {
   resetFilters,
 } = filterSlice.actions;
 
-export const selectTitleFilter = (state) => state.filter.title;
-export const selectAuthorFilter = (state) => state.filter.author;
-export const selectFavoriteFilter = (state) => state.filter.favorite;
+export const selectTitleFilter = (state: { filter: FilterState }) =>
+  state.filter.title;
+export const selectAuthorFilter = (state: { filter: FilterState }) =>
+  state.filter.author;
+export const selectFavoriteFilter = (state: { filter: FilterState }) =>
+  state.filter.favorite;
 
 export default filterSlice.reducer;
